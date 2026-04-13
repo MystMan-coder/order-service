@@ -9,13 +9,13 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'mvn clean install'
+                sh 'mvn clean install -Dspring.profiles.active=h2'
             }
         }
 
         stage('Test') {
             steps {
-                sh 'mvn test'
+                sh 'mvn test -Dspring.profiles.active=h2'
             }
         }
 

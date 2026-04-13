@@ -13,15 +13,21 @@ pipeline {
             }
         }
 
-        stage('Test') {
+        stage('Docker Build') {
             steps {
-                sh 'mvn test -Dspring.profiles.active=h2'
+                sh 'docker build -t order-service .'
             }
         }
 
-        stage('Package') {
+        stage('Stop Old Container') {
             steps {
-                sh 'mvn package'
+                sh 'docker rm -f order-service-container || true'
+            }
+        }
+
+        stage('Run Container') {
+            steps {
+                sh 'docker run -d -p 8081:8081 --name order-service-container order-service'
             }
         }
     }

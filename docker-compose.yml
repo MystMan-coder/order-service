@@ -58,3 +58,16 @@ services:
       - "5672:5672"
       - "15672:15672"
     restart: always
+
+  jenkins:
+    image: jenkins/jenkins:lts
+    container_name: jenkins
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+    restart: always
+
+volumes:
+  jenkins_home:

@@ -19,15 +19,17 @@ pipeline {
             }
         }
 
-        stage('Stop Old Container') {
+
+
+        stage('Test') {
             steps {
-                sh 'docker rm -f order-service-container || true'
+                sh 'mvn test -Dspring.profiles.active=h2'
             }
         }
 
-        stage('Run Container') {
+        stage('Package') {
             steps {
-                sh 'docker run -d -p 8081:8081 --name order-service-container order-service'
+                sh 'mvn package'
             }
         }
     }
